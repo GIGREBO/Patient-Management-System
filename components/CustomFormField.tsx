@@ -17,7 +17,7 @@ import PhoneInput from "react-phone-number-input";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '@/app/globals.css';
-import {Checkbox} from "@/components/ui/checkbox"
+import { Checkbox } from "@/components/ui/checkbox";
 
 import {
   Select,
@@ -28,12 +28,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-
-
-
 type E164Number = string;
-
-
 
 interface CustomProps {
   control: Control<any>;
@@ -41,6 +36,7 @@ interface CustomProps {
   name: string;
   label?: string;
   placeholder?: string;
+  iconSrc?: string; // ✅ Added this line to fix your build error
   iconAlt?: string;
   disabled?: boolean;
   showTimeSelect?: boolean;
@@ -127,23 +123,25 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         </div>
       );
 
-      case FormFieldType.SELECT:
-        return (
-          <FormControl>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
-                <SelectTrigger className="shad-select-trigger">
-                  <SelectValue placeholder={props.placeholder} />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent className="shad-select-content">
-                {props.children}
-              </SelectContent>
-            </Select>
-          </FormControl>
-        );
+    case FormFieldType.SELECT:
+      return (
+        <FormControl>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger className="shad-select-trigger">
+                <SelectValue placeholder={props.placeholder} />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent className="shad-select-content">
+              {props.children}
+            </SelectContent>
+          </Select>
+        </FormControl>
+      );
+
     case FormFieldType.SKELETON:
       return renderSkeleton ? renderSkeleton(field) : null;
+
     case FormFieldType.TEXTAREA:
       return (
         <FormControl>
@@ -165,10 +163,10 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               checked={field.value}
               onCheckedChange={field.onChange}
             />
-            
           </div>
         </FormControl>
       );
+
     default:
       return null;
   }
